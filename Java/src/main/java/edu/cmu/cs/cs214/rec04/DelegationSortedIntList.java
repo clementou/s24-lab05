@@ -1,7 +1,5 @@
 package edu.cmu.cs.cs214.rec04;
 
-import java.util.ArrayList;
-
 /**
  * DelegationSortedIntList -- a variant of a SortedIntList that keeps
  * count of the number of attempted element insertions (not to be confused
@@ -12,44 +10,56 @@ import java.util.ArrayList;
  *
  */
 
-public class DelegationSortedIntList implements IntegerList{
-    private ArrayList<Integer> sortedList = new ArrayList<>();
-    private int totalAdded;
+public class DelegationSortedIntList implements IntegerList {
+    private SortedIntList sortedList = new SortedIntList();
+    private int totalAdded = 0;
 
     @Override
     public boolean add(int num) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        boolean result = sortedList.add(num);
+        if (result) {
+            totalAdded++;
+        }
+        return result;
     }
 
     @Override
     public boolean addAll(IntegerList list) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addAll'");
+        boolean changed = false;
+        for (int i = 0; i < list.size(); i++) {
+            boolean result = add(list.get(i));
+            if (result) {
+                changed = true;
+            }
+        }
+        return changed;
     }
 
     @Override
     public int get(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+        return sortedList.get(index);
     }
 
     @Override
     public boolean remove(int num) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        return sortedList.remove(num);
     }
 
     @Override
     public boolean removeAll(IntegerList list) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeAll'");
+        boolean changed = false;
+        for (int i = 0; i < list.size(); i++) {
+            boolean result = sortedList.remove(list.get(i));
+            if (result) {
+                changed = true;
+            }
+        }
+        return changed;
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return sortedList.size();
     }
 
     public int getTotalAdded() {
